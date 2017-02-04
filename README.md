@@ -37,7 +37,28 @@ the majority of input images correspond to zero value of the steering angle. If 
      <img src=img/fig4.png />
 </p>
 
-To account for uneven distribution of different steering angles in the dataset, a new dataset was created by randomly dropping 50% of images with zero steering values and by further adding four copies of each image with nonzero steering value. The following figure shows the distribution of values in the final dataset.
+To account for uneven distribution of different steering angles in the dataset, a new dataset was created by randomly dropping 50% of images with zero steering values and by further adding four copies of each image with nonzero steering value. 
+```
+# Find all samples with zero steering angle
+# and randomly drop one half of them
+zeros = data[data['steering'] == 0.0].index
+count = zeros.shape[0]
+zeros_out = np.random.randint(0, count, int(count * 0.01))
+df_dropped_zeros = data.drop(data.index[zeros[zeros_out]])
+
+
+nonzeros = df_dropped_zeros[df_dropped_zeros['steering'] != 0.0].index
+
+copies = pd.DataFrame()
+
+for i in nonzeros:
+    sample = df_dropped_zeros.loc[i]
+    for i in range(10):
+        copies = copies.append(sample)
+    
+df_final = df_dropped_zeros.append(copies)```
+
+The following figure shows the distribution of values in the final dataset.
 
 <p align="Center">
      <img src=img/fig5.png />
