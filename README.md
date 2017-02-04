@@ -25,7 +25,7 @@ To reduce the size of the input layer and hence the complexity of the model, inp
      <img src=img/fig2.png />
 </p>
 
-The steering angle of input images falls into the (-1, 1) range. As we can see in Figure 30%
+The steering angle of input images falls into the (-1, 1) range. As we can see in the following figure, 
 
 <p align="Center">
      <img src=img/fig3.png />
@@ -43,5 +43,5 @@ To account for uneven distribution of different steering angles in the dataset, 
      <img src=img/fig5.png />
 </p>
 
-Hence, the final dataset contains 44783 samples. All samples were used for model training, and a subset of images was selected for validation purposes. The final validation is done running the simulator in autonomous mode.
+Hence, the final dataset contains 44783 samples. All samples were used for model training, and a subset of images was selected for validation purposes. The final validation is done by running the simulator in autonomous mode.
 

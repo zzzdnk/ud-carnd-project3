@@ -16,7 +16,6 @@ def generate_images(file='./data/driving_log_filtered.csv'):
         file_list = np.random.randint(0, m, m)
         print('generating list')
         for i in file_list:
-        #for i in range(200):
             angle = data.iloc[i,3]
             
             img = mimg.imread('./data/' + data.iloc[i,0])
@@ -24,18 +23,15 @@ def generate_images(file='./data/driving_log_filtered.csv'):
             img = cv2.resize(img[60:-50,:,:], (0, 0), fx=0.5, fy=0.5)
             #r = [x for x in range(320)]
             #img = cv2.resize(img[60:-50,r[:140] + r[-140:],:], (0,0), fx=0.5, fy=0.5)
-            
-            
-            
+
             if np.random.random() < 0.5:
                 img = cv2.flip(img, 1)
                 angle = -1.0 * angle
                 
             # Reshape the image into a 4D vector
             imgr = np.reshape(img,(1,img.shape[0],img.shape[1],img.shape[2]))
-            # Reshape true value in column 6 into a 1-tuple
-            #print(np.reshape(angle,(1)))
-            if angle > 0.2 or angle < -0.2:
+            # Reshape steering angle into a 1-tuple
+            if True: #angle > 0.2 or angle < -0.2:
                 yield imgr, np.reshape(angle,(1))
             
 
@@ -94,7 +90,7 @@ def model_predict(model, cnt=1):
     return table
     
     
-def get_val_set(n):
+def get_image_set(n):
     """ 
     Return a tuple containing a set of n input images from the generator 
     and their corresponding labels 
@@ -150,9 +146,9 @@ import matplotlib.pyplot as plt
 for j in range(10):
     print('Starting evaluation {}'.format(j))
     
-    val_set = get_val_set(2000)
+    val_set = get_image_set(2000)
     
-    train_set = get_val_set(20000)
+    train_set = get_image_set(20000)
     
     hist = model.fit(train_set[0], train_set[1], batch_size=200,
                                callbacks=[checkpointer,cb], verbose=1,
@@ -172,13 +168,6 @@ for j in range(10):
     plt.show()
 
     
-    
-#val_set = get_val_set(20)
-#train_set = get_val_set(50)
-#model.fit(train_set[0], train_set[1],  nb_epoch=20, 
-#                    callbacks=[checkpointer,cb], verbose=1, validation_data=val_set)
-#
-
 
 print('Saving final model')
 save_model(model, 'final_model')
