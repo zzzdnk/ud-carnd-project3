@@ -43,7 +43,7 @@ To account for uneven distribution of different steering angles in the dataset, 
 # and randomly drop one half of them
 zeros = data[data['steering'] == 0.0].index
 count = zeros.shape[0]
-zeros_out = np.random.randint(0, count, int(count * 0.01))
+zeros_out = np.random.randint(0, count, int(count * 0.5))
 df_dropped_zeros = data.drop(data.index[zeros[zeros_out]])
 
 
@@ -53,7 +53,7 @@ copies = pd.DataFrame()
 
 for i in nonzeros:
     sample = df_dropped_zeros.loc[i]
-    for i in range(10):
+    for i in range(4):
         copies = copies.append(sample)
     
 df_final = df_dropped_zeros.append(copies)
