@@ -56,8 +56,8 @@ for i in nonzeros:
     for i in range(10):
         copies = copies.append(sample)
     
-df_final = df_dropped_zeros.append(copies)```
-
+df_final = df_dropped_zeros.append(copies)
+```
 The following figure shows the distribution of values in the final dataset.
 
 <p align="Center">
